@@ -1,12 +1,17 @@
+
 from typing import Dict
 
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.http import HttpResponse
 
 from app_mundial.models import  Estadios, Jugadores, Selecciones
 
 
 # Create your views here.
+
+
+
+
 def inicio(request):
 
       return render(request, "app_mundial/inicio.html")
@@ -19,6 +24,7 @@ def Estadios(request):
 
 def Jugadores(request):
 
+      
       return render(request, "app_mundial/Jugadores.html")
 
 
@@ -39,4 +45,18 @@ def Selecciones(request):
 #       else:  # GET
 #             return render(request, "AppCoder/form_curso.html")
 
+# VISTAS DE jugadores
 
+
+
+
+
+def Jugadores_formulario(request):
+       if request.method == "POST":
+             data_formulario: Dict = request.POST
+             jugadores = Jugadores(['nombre'], edad=data_formulario['edad'], equipo=data_formulario['equipo'])
+             jugadores.save()
+             return render(request, "app_mundial/inicio.html")
+       
+       else:       #GET
+           return render(request, "app_mundial/form_jugadores.html")

@@ -55,7 +55,7 @@ ROOT_URLCONF = 'entrega_coder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["C:/Users/cris/Desktop/Entregable2/entrega_coder/entrega_coder/plantilla"],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

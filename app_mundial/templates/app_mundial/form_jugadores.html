@@ -1,0 +1,23 @@
+{% extends "app_mundial/plantilla_base.html" %}
+<title>Crear Jugadores</title>
+{% block contenido_base %}
+
+<form  method="post">{% csrf_token %}
+   
+  <p>
+    Nombre:
+  <input type="text" name="nombre" >
+  </p>
+  <p>
+    Edad:
+  <input type="number" name="edad" >
+  </p>
+  <p>
+    Equipo:
+  <input type="text" name="equipo" >
+  </p>
+  <input type="submit" value="Enviar" />
+  
+  
+</form>
+{% endblock contenido_base %}
