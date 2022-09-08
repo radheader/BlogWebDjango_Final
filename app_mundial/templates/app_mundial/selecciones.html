@@ -1,7 +1,48 @@
 {% extends "app_mundial/plantilla_base.html" %}
 
+{% block style_block %}
+<style>
+    table.coder-table {
+      border:3px solid;
+    }
+    th,
+    td {
+      border:1px solid;
+      padding:5px 10px;
+    }
+  </style>
+{% endblock style_block %}
+
 {% block contenido_base %}
 
 <h1>Selecciones</h1>
+<a href="{% url "selecciones_formulario" %}"> Crear Selecciones</a>
+<br>
+<a href="{% url "busqueda_selecciones_form" %}"> Buscar Selecciones</a>
+
+<br><br>
+<h3>Todas las selecciones:</h3>
+
+<table border="3"> 
+    <tr>
+        <td>
+            <b>Nombre</b>
+        </td>
+        <td>
+            <b>Confederacion</b>
+        </td>
+         <td>
+            <b>Palmares</b>
+        </td>
+    </tr>
+
+    {% for seleccion in selecciones %}
+    <tr>
+        <td>{{seleccion.nombre}}</td>
+        <td>{{seleccion.confederacion}}</td>
+        <td>{{seleccion.palmares}}</td>
+    </tr>
+    {% endfor %}
+</table>
 
 {% endblock contenido_base %}

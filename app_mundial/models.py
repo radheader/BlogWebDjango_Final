@@ -28,7 +28,7 @@ class Jugadores(models.Model):
 class Selecciones(models.Model):
      nombre = models.CharField(max_length=128)
      confederacion = models.CharField(max_length=128)
-     palmares = models.CharField(max_length=128)
+     palmares = models.CharField(max_length=50)
 
      def __str__(self):
         return f'{self.nombre} - {self.confederacion} - {self.palmares}'

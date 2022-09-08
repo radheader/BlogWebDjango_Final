@@ -1,7 +1,51 @@
 {% extends "app_mundial/plantilla_base.html" %}
 
+{% block style_block %}
+<style>
+    table.coder-table {
+      border:3px solid;
+    }
+    th,
+    td {
+      border:1px solid;
+      padding:5px 10px;
+    }
+  </style>
+{% endblock style_block %}
+
 {% block contenido_base %}
 
 <h1>Estadios</h1>
+<a href="{% url "estadios_formulario" %}"> Crear Estadios</a>
+<br>
+<a href="{% url "busqueda_estadios_form" %}"> Buscar Estadios</a>
+
+<br><br>
+<h3>Todos los Estadios:</h3>
+
+<table border="3"> 
+  
+    <tr>
+      
+        <td>
+            <b>Nombre</b>
+        </td>
+        <td>
+            <b>Pais</b>
+        </td>
+         <td>
+            <b>Capacidad</b>
+        </td>
+    </tr>
+
+    {% for estadio in estadios %}
+    <tr>
+        <td>{{estadio.nombre}}</td>
+        <td>{{estadio.pais}}</td>
+        <td>{{estadio.capacidad}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 
 {% endblock contenido_base %}

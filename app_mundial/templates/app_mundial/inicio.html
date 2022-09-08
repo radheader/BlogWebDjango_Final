@@ -3,6 +3,9 @@
 {% block contenido_base %}
 <h1>Inicio</h1>
 <!-- Cuerpo-->
+{% if exitoso %}
+<div style="background-color: black">El Jugador se ha guardado correctamente</div>
+{% endif %}
 <header class="masthead">
     <div class="container position-relative">
         <div class="row justify-content-center">

@@ -1,9 +1,49 @@
-
-
 {% extends "app_mundial/plantilla_base.html" %}
+
+{% block style_block %}
+<style>
+    table.coder-table {
+      border:3px solid;
+    }
+    th,
+    td {
+      border:1px solid;
+      padding:5px 10px;
+    }
+  </style>
+{% endblock style_block %}
 
 {% block contenido_base %}
 
 <h1>Jugadores</h1>
+<a href="{% url "jugadores_formulario" %}"> Crear Jugadores</a>
+<br>
+<a href="{% url "busqueda_jugadores_form" %}"> Buscar Jugadores</a>
+
+<br><br>
+<h3>Todos los Jugadores:</h3>
+
+<table border="3"> 
+    <tr>
+        <td>
+            <b>Nombre</b>
+        </td>
+        <td>
+            <b>Edad</b>
+        </td>
+         <td>
+            <b>Equipo</b>
+        </td>
+    </tr>
+
+    {% for jugador in jugadores %}
+    <tr>
+        <td>{{jugador.nombre}}</td>
+        <td>{{jugador.edad}}</td>
+        <td>{{jugador.equipo}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 
 {% endblock contenido_base %}

@@ -5,10 +5,21 @@ from app_mundial import views
 
 urlpatterns = [
     path('', views.inicio, name="inicio"),
-    path('estadios/', views.Estadios, name="estadios"),
-    path('selecciones/', views.Selecciones, name="selecciones"),
-
-    path('jugadores/', views.Jugadores, name="jugadores"),
-    path('crear-jugadores/', views.Jugadores_formulario, name="Jugadores_formulario"),
+     # URLs de Jugadores
+    path('jugadores/', views.jugadores, name="jugadores"),
+    path('crear-jugadores/', views.jugadores_formulario, name="jugadores_formulario"),
+    path('busqueda-jugadores-form/', views.busqueda_jugadores, name="busqueda_jugadores_form"),
+    path('busqueda-jugadores/', views.buscar_jugadores, name="busqueda_jugadores"),
+    # URLs de Estadios
+    path('estadios/', views.estadios, name="estadios"),
+    path('crear-estadios/', views.estadios_formulario, name="estadios_formulario"),
+    path('busqueda-estadios-form/', views.busqueda_estadios, name="busqueda_estadios_form"),
+    path('busqueda-estadios/', views.buscar_estadios, name="busqueda_estadios"),
+    # URLs de Selecciones
+    path('seleciones/', views.selecciones, name="selecciones"),
+    path('crear-selecciones/', views.selecciones_formulario, name="selecciones_formulario"),
+    path('busqueda-selecciones-form/', views.busqueda_selecciones, name="busqueda_selecciones_form"),
+    path('busqueda-selecciones/', views.buscar_selecciones, name="busqueda_selecciones"),
+   
    
 ]

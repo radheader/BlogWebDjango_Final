@@ -1,0 +1,11 @@
+{% extends "app_mundial/plantilla_base.html" %}
+
+{% block contenido_base %}
+<form action="{% url "busqueda_selecciones" %}" method="GET">
+  {% csrf_token %}
+  <span>Nombre:
+  <input type="text" name="nombre"> 
+  </span>
+  <input type="submit" value="Buscar" />
+  </form>
+{% endblock contenido_base %}
