@@ -20,6 +20,9 @@ urlpatterns = [
     path('crear-selecciones/', views.selecciones_formulario, name="selecciones_formulario"),
     path('busqueda-selecciones-form/', views.busqueda_selecciones, name="busqueda_selecciones_form"),
     path('busqueda-selecciones/', views.buscar_selecciones, name="busqueda_selecciones"),
-   
+    # URLS Usuario y sesión
+    path('login/', views.login_request, name = 'login'),
+    path('register/', views.register, name = 'register'),
+    path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
    
 ]
