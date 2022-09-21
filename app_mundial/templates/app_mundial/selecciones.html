@@ -23,7 +23,8 @@
 <br><br>
 <h3>Todas las selecciones:</h3>
 
-<table border="3"> 
+<table border="3">
+  <tbody>
     <tr>
         <td>
             <b>Nombre</b>
@@ -41,8 +42,11 @@
         <td>{{seleccion.nombre}}</td>
         <td>{{seleccion.confederacion}}</td>
         <td>{{seleccion.palmares}}</td>
+        <td><a href="{% url "editar_selecciones" seleccion.id %}">Editar</a></td>
+        <td><a href="{% url "eliminar_selecciones" seleccion.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
+  </tbody> 
 </table>
 
 {% endblock contenido_base %}

@@ -27,21 +27,7 @@ def inicio(request):
       return render(request, "app_mundial/inicio.html")
 
 
-def estadios(request):
-      estadios = Estadios.objects.all()
-      return render(request, "app_mundial/estadios.html", {"estadios": estadios}) 
-
-
-
-def selecciones(request):
-      selecciones = Selecciones.objects.all()
-      return render(request, "app_mundial/selecciones.html", {"selecciones":selecciones})
-
-
-
-
-
-# Formulario Jugadores
+# Formulario Jugadores: Eliminar, Editar, Crear, Buscar
 
 def jugadores(request):
     jugadores = Jugadores.objects.all()
@@ -59,6 +45,34 @@ def eliminar_jugadores(request, id):
     url_final = f"{reverse('jugadores')}?borrado={borrado_id}"
 
     return redirect(url_final)
+
+
+def editar_jugadores(request, id):
+    jugadores = Jugadores.objects.get(id=id)
+    if request.method == 'POST':
+        formulario = JugadoresFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+
+            jugadores.nombre = data['nombre']
+            jugadores.edad = data['edad']
+            jugadores.equipo = data['equipo']
+            
+            jugadores.save()
+
+            return redirect(reverse('jugadores'))  
+
+    else:  # GET
+        inicial = {
+            'nombre': jugadores.nombre,
+            'edad': jugadores.edad,
+            'equipo': jugadores.equipo,
+            
+        }
+        formulario = JugadoresFormulario(initial=inicial)
+    return render(request, "app_mundial/form_jugadores.html", {"formulario": formulario})
+          
 
 
 def crear_jugadores(request):
@@ -104,10 +118,56 @@ def buscar_jugadores(request):
         return render(request, "app_mundia/jugadores.html", {'jugadores': []}) 
 
 
+# Formulario de Estadios: Eliminar, Editar, Crear, Buscar
+
+
+def estadios(request):
+      estadios = Estadios.objects.all()
+      contexto = {"estadios": estadios}
+      borrado = request.GET.get("borrado", None)
+      contexto ["borrado"]= borrado
+
+      return render(request, "app_mundial/estadios.html", contexto)
 
 
 
-# Formulario de Estadios
+def eliminar_estadios(request, id):
+    estadios = Estadios.objects.get(id=id)
+    borrado_id = estadios.id  
+    estadios.delete()
+    url_final = f"{reverse('estadios')}?borrado={borrado_id}"
+
+    return redirect(url_final)
+
+
+def editar_estadios(request, id):
+    estadios = Estadios.objects.get(id=id)
+    if request.method == 'POST':
+        formulario = EstadiosFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+
+            estadios.nombre = data['nombre']
+            estadios.pais = data['pais']
+            estadios.capacidad = data['capacidad']
+            
+            estadios.save()
+
+            return redirect(reverse('estadios'))  
+
+    else:  # GET
+        inicial = {
+            'nombre': estadios.nombre,
+            'pais': estadios.pais,
+            'capacidad': estadios.capacidad,
+            
+        }
+        formulario = EstadiosFormulario(initial=inicial)
+    return render(request, "app_mundial/form_estadios.html", {"formulario": formulario})
+          
+
+
 
 def estadios_formulario(request):
        if request.method == "POST":
@@ -138,7 +198,61 @@ def buscar_estadios(request):
 
 
 
-# Formulario de Selecciones
+# Formulario de Selecciones: Eliminar, Editar, Crear, Buscar
+
+def selecciones(request):
+      selecciones = Selecciones.objects.all()
+      contexto = {"selecciones": selecciones}
+      borrado = request.GET.get("borrado", None)
+      return render(request, "app_mundial/selecciones.html", {"selecciones":selecciones})
+
+def eliminar_selecciones(request, id):
+    selecciones = Selecciones.objects.get(id=id)
+    borrado_id = selecciones.id
+    selecciones.delete()
+    url_final = f"{reverse('selecciones')}?borrado={borrado_id}"
+
+    return redirect(url_final)
+
+def crear_selecciones(request):
+    if request.method == 'POST':
+        formulario = SeleccionesFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            selecciones = Selecciones(**data)
+            
+            selecciones.save()
+            return redirect(reverse('selecciones'))
+    else:  # GET
+        formulario = SeleccionesFormulario()  # Formulario vacio para construir el html
+    return render(request, "app_mundial/form_seleccionesr.html", {"formulario": formulario})
+
+def editar_selecciones(request, id):
+    # Recibe param profesor id, con el que obtenemos el profesor
+    selecciones = Selecciones.objects.get(id=id)
+
+    if request.method == 'POST':
+        formulario = SeleccionesFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+
+            selecciones.nombre = data['nombre']
+            selecciones.confederacion = data['confederacion']
+            selecciones.palmares = data['palmares']
+            selecciones.save()
+
+            return redirect(reverse('selecciones'))
+    else:  # GET
+        inicial = {
+            'nombre': selecciones.nombre,
+            'confedracion': selecciones.confederacion,
+            'palmares': selecciones.palmares,
+            
+        }
+        formulario = SeleccionesFormulario(initial=inicial)
+    return render(request, "app_mundial/form_selecciones.html", {"formulario": formulario})      
 
 def selecciones_formulario(request):
        if request.method == "POST":
@@ -158,7 +272,6 @@ def busqueda_selecciones(request):
       return render( request, "app_mundial/form_busqueda_selecciones.html")
 
 
-           
 def buscar_selecciones(request):
     if request.GET["nombre"]:
         nombre = request.GET["nombre"]
@@ -232,43 +345,4 @@ class CustomLogoutView(LogoutView):
     
 
 
-# def login_request(request):
-#    next_url = request.GET.get('next')
-#     if request.method == "POST":
-#         form = AuthenticationForm(request, data = request.POST)
-#         if form.is_valid():
-#             usuario = form.cleaned_data.get('username')
-#             contra = form.cleaned_data.get('password')
-#             user = authenticate(username=usuario, password=contra)
-#             if user:
-#                 login(request=request, user=user)
-#                 if next_url:
-#                     return redirect(next_url)
-#                 return render(request, "app_mundial/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
-#             else:
-#                 return render(request,"app_mundial/inicio.html", {"mensaje":"Error, datos incorrectos"})
-#         else:
-#             return render(request,"app_mundial/inicio.html", {"mensaje":"Error, formulario erroneo"})
-# 
-#     form = AuthenticationForm()
-#     return render(request,"app_mundial/login.html", {'form':form} )
-
-
-# class CustomLogoutView(LogoutView):
-#     template_name = 'app_mundial/logout.html'
-
-
-
-
-
-# VISTAS DE jugadores
-# Formulario echo a mano
-#def jugadores_formulario(request):
-#       if request.method == "POST":
-#            data_formulario: Dict = request.POST
-#             jugadores = Jugadores(nombre=data_formulario['nombre'], edad=data_formulario['edad'], equipo=data_formulario['equipo'])
-#             jugadores.save()
-#             return render(request, "app_mundial/inicio.html")
-#       
-#       else:       #GET
-#             return render(request, "app_mundial/form_jugadores.html")      
+    

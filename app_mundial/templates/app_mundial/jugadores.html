@@ -11,7 +11,7 @@
       padding:5px 10px;
     }
     .eliminado {
-    background-color: red;
+    background-color: blueviolet;
   }
   </style>
 {% endblock style_block %}
@@ -33,6 +33,7 @@
 <h3>Todos los Jugadores:</h3>
 
 <table border="3"> 
+  <tbody>
     <tr>
         <td>
             <b>Nombre</b>
@@ -43,8 +44,10 @@
          <td>
             <b>Equipo</b>
         </td>
+
         <th>Editar</th>
         <th>Eliminar</th>
+        
     </tr>
 
     {% for jugador in jugadores %}
@@ -52,10 +55,11 @@
         <td>{{jugador.nombre}}</td>
         <td>{{jugador.edad}}</td>
         <td>{{jugador.equipo}}</td>
-      
-        <td><a href="{% url 'eliminar_jugadores' jugadores.id %}">Eliminar</a></td>
+        <td><a href="{% url "editar_jugadores" jugador.id %}">Editar</a></td>
+        <td><a href="{% url "eliminar_jugadores" jugador.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
+  </tbody>
 </table>
 
 
