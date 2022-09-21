@@ -1,18 +1,20 @@
 {% extends "app_mundial/plantilla_base.html" %}
 
 {% block contenido_base %}
-<h1>Inicio</h1>
+
 <!-- Cuerpo-->
 {% if exitoso %}
 <div style="background-color: black">Se ha guardado correctamente</div>
 {% endif %}
+<h1>Inicio</h1>
+<img style="width: 140px; height: 140px; border-radius: 100px; " src="{{ user.avatar.imagen.url }}" />
 <header class="masthead">
     <div class="container position-relative">
         <div class="row justify-content-center">
             <div class="col-xl-6">
                 <div class="text-center text-white">
                     <!-- Page heading-->
-                    <h1 class="mb-5"></h1>
+                    <h1 class="sm-4"></h1>
 
                 </div>
             </div>

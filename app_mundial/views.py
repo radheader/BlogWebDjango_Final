@@ -1,12 +1,14 @@
+from http.client import CONTINUE
 from typing import Dict
+from urllib.request import Request
 
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView
+from django.shortcuts import render, redirect, reverse
+from django.urls import  reverse_lazy
+from django.views.generic import ListView 
 from django.contrib.auth.views import LogoutView
 
 from app_mundial.models import   Jugadores, Estadios, Selecciones
-from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, SeleccionesFormulario, UserRegisterForm
+from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, SeleccionesFormulario, UserRegisterForm, AvatarFormulario
 
 #Para el login
 from django.contrib.auth.forms import AuthenticationForm
@@ -30,12 +32,6 @@ def estadios(request):
       return render(request, "app_mundial/estadios.html", {"estadios": estadios}) 
 
 
-def jugadores(request):
-      jugadores = Jugadores.objects.all()
-      return render(request, "app_mundial/jugadores.html", {"jugadores": jugadores})
-      
-      
-
 
 def selecciones(request):
       selecciones = Selecciones.objects.all()
@@ -44,18 +40,51 @@ def selecciones(request):
 
 
 
-# Formulario Selecciones
-# Formulario con (api form django)
+
+# Formulario Jugadores
+
+def jugadores(request):
+    jugadores = Jugadores.objects.all()
+    contexto = {"jugadores": jugadores}
+    borrado = request.GET.get('borrado',None)
+    contexto['borrado'] = borrado
+
+    return render(request, "app_mundial/jugadores.html", contexto)
+
+
+def eliminar_jugadores(request, id):
+    jugadores = Jugadores.objects.get(id=id)
+    borrado_id = jugadores.id  
+    jugadores.delete()
+    url_final = f"{reverse('jugadores')}?borrado={borrado_id}"
+
+    return redirect(url_final)
+
+
+def crear_jugadores(request):
+    if request.method == 'POST':
+        formulario = JugadoresFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            jugadores = Jugadores(**data)
+            jugadores.save()
+            return redirect(reverse('jugadores'))
+    else:  # GET
+        formulario = JugadoresFormulario()  # Formulario vacio para construir el html
+    return render(request, "app_mundial/form_jugadores.html", {"formulario": formulario})
+
+
 
 def jugadores_formulario(request):
        if request.method == "POST":
             formulario = JugadoresFormulario (request.POST)
 
             if formulario.is_valid():
-                  data = formulario.cleaned_data
-                  jugadores = Jugadores(nombre=data['nombre'], edad=data['edad'], equipo=data['equipo'])
-                  jugadores.save()
-                  return render(request, "app_mundial/inicio.html", {"exitoso": True})
+                data = formulario.cleaned_data
+                jugadores = Jugadores(nombre=data['nombre'], edad=data['edad'], equipo=data['equipo'])
+                jugadores.save()
+                return render(request, "app_mundial/inicio.html", {"exitoso": True})
 
        else:
             formulario = JugadoresFormulario() # Formulario vacio para construir el HTML
@@ -73,6 +102,10 @@ def buscar_jugadores(request):
         return render(request, "app_mundial/jugadores.html", {'jugadores': jugadores})
     else:
         return render(request, "app_mundia/jugadores.html", {'jugadores': []}) 
+
+
+
+
 
 # Formulario de Estadios
 
@@ -134,7 +167,21 @@ def buscar_selecciones(request):
     else:
         return render(request, "app_mundia/selecciones.html", {'selecciones': []})             
        
-# Views de usuario, registro, login o logout.
+# Views de usuario, registro, login o logout mas Avatar.
+
+def agregar_avatar(request):
+    if request.method == 'POST':
+
+        form = AvatarFormulario(request.POST, request.FILES) #aquí me llega toda la información del html
+
+        if form.is_valid:   #Si pasó la validación de Django
+            avatar = form.save()
+            avatar.user = request.user
+            avatar.save()
+            return redirect(reverse('inicio'))
+
+    form = AvatarFormulario() #Formulario vacio para construir el html
+    return render(request, "app_mundial/form_avatar.html", {"form":form})
 
 
 def register(request):

@@ -10,15 +10,24 @@
       border:1px solid;
       padding:5px 10px;
     }
+    .eliminado {
+    background-color: red;
+  }
   </style>
 {% endblock style_block %}
 
 {% block contenido_base %}
 
+{% if borrado %}
+<div class="eliminado">Fue borrado exitosamente el jugador con ID: {{ borrado }}</div>
+{% endif %}
+
+
 <h1>Jugadores</h1>
-<a href="{% url "jugadores_formulario" %}"> Crear Jugadores</a>
-<br>
-<a href="{% url "busqueda_jugadores_form" %}"> Buscar Jugadores</a>
+
+<a href="{% url "crear_jugadores" %}"><button type="button" class="btn btn-primary">Crear Jugadores</button></a>
+<br><br>
+<a href="{% url "busqueda_jugadores_form" %}"><button type="button" class="btn btn-primary">Buscar Jugadores</button></a>
 
 <br><br>
 <h3>Todos los Jugadores:</h3>
@@ -34,6 +43,8 @@
          <td>
             <b>Equipo</b>
         </td>
+        <th>Editar</th>
+        <th>Eliminar</th>
     </tr>
 
     {% for jugador in jugadores %}
@@ -41,6 +52,8 @@
         <td>{{jugador.nombre}}</td>
         <td>{{jugador.edad}}</td>
         <td>{{jugador.equipo}}</td>
+      
+        <td><a href="{% url 'eliminar_jugadores' jugadores.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
 </table>

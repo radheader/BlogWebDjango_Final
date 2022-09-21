@@ -1,6 +1,7 @@
 {% extends "app_mundial/plantilla_base.html" %}
 
 {% block contenido_base %}
+<h2>Registrarse:</h2>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
