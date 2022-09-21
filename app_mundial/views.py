@@ -26,6 +26,10 @@ def inicio(request):
 
       return render(request, "app_mundial/inicio.html")
 
+def about(request):
+
+      return render(request, "app_mundial/about.html")
+
 
 # Formulario Jugadores: Eliminar, Editar, Crear, Buscar
 

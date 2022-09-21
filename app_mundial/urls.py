@@ -5,6 +5,7 @@ from app_mundial import views
 
 urlpatterns = [
     path('', views.inicio, name="inicio"),
+    path('about',views.about, name="about"),
     # URLs de Jugadores
     path('jugadores/', views.jugadores, name="jugadores"),
     path('crear-jugadores/', views.jugadores_formulario, name="crear_jugadores"),
