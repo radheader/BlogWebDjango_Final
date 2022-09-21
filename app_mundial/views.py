@@ -4,11 +4,11 @@ from urllib.request import Request
 
 from django.shortcuts import render, redirect, reverse
 from django.urls import  reverse_lazy
-from django.views.generic import ListView 
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LogoutView
 
 from app_mundial.models import   Jugadores, Estadios, Selecciones
-from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, SeleccionesFormulario, UserRegisterForm, AvatarFormulario
+from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, SeleccionesFormulario, UserRegisterForm, UserUpdateForm, AvatarFormulario
 
 #Para el login
 from django.contrib.auth.forms import AuthenticationForm
@@ -281,6 +281,15 @@ def buscar_selecciones(request):
         return render(request, "app_mundia/selecciones.html", {'selecciones': []})             
        
 # Views de usuario, registro, login o logout mas Avatar.
+class ProfileUpdateView( UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('inicio')
+    template_name = 'app_mundial/form_perfil.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 
 def agregar_avatar(request):
     if request.method == 'POST':
@@ -340,7 +349,8 @@ def login_request(request):
 
 
 class CustomLogoutView(LogoutView):
-    template_name = "app_mundial/logout.html"    
+    template_name = "app_mundial/logout.html"  
+    next_page = reverse_lazy("inicio") 
     
     
 

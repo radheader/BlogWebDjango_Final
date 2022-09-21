@@ -26,12 +26,11 @@ urlpatterns = [
     path('busqueda-selecciones/', views.buscar_selecciones, name="busqueda_selecciones"),
     path('editar-selecciones/<int:id>/', views.editar_selecciones, name="editar_selecciones"),
     path('eliminar-selecciones/<int:id>/', views.eliminar_selecciones, name="eliminar_selecciones"),
+    # URLS Perfil
+    path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
+    path('agregar-avatar/', views.agregar_avatar, name="agregar_avatar"),
     # URLS Usuario y sesión
     path('login/', views.login_request, name = 'login'),
     path('register/', views.register, name = 'register'),
     path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
-    # URLS Perfil
-   # path('editar-perfil/', views.editar_perfil, name="editar_perfil"),
-    path('agregar-avatar/', views.agregar_avatar, name="agregar_avatar"),
-   
 ]

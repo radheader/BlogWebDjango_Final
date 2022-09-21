@@ -1,0 +1,12 @@
+{% extends "app_mundial/plantilla_base.html" %}
+
+{% block contenido_base %}
+<p>Tu username es <b>{{ object.username }}</b></p>
+
+<h2>Editar datos:</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Salvar"/>
+</form>
+{% endblock contenido_base %}
