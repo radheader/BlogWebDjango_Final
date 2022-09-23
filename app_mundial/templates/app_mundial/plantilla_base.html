@@ -47,10 +47,13 @@
                 {% endif %}
             </div>
         </nav>
-
+        
         <section style="padding:80px;">
             {% if mensaje %}
-            <span style="background-color: red;">{{mensaje}}</span>
+            <span style="background-color: blue;">{{mensaje}}</span>
+            <div>
+                <img style="width: 140px; height: 140px; border-radius: 100px; " src="{{ user.avatar.imagen.url }}" />
+            </div>
             {% endif %}
             {% block contenido_base %}
             {% endblock contenido_base %}
@@ -58,19 +61,19 @@
 
 
         <!-- Footer-->
-        <footer class="footer bg-dark fixed-bottom">
+        <footer class="footer bg-dark" >
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
                             <li class="list-inline-item"><a href="#!">Ayuda</a></li>
-                            <li class="list-inline-item">⋅</li>
+                            <li class="l.py ist-inline-item">⋅</li>
                             <li class="list-inline-item"><a href="#!">Informacion</a></li>
                       
                         </ul>
                         <p class="text-muted small mb-4 mb-lg-0">&copy; Curso de Python - CoderHouse.</p>
                     </div>
-                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
+                    <div class="col-lg-6 h-25 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item me-4">
                                 <a href="#!"><i class="bi-facebook fs-3"></i></a>
