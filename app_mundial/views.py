@@ -135,7 +135,7 @@ def estadios(request):
 
 
 
-def eliminar_estadios(request, id):
+def eliminar_estadios(id):
     estadios = Estadios.objects.get(id=id)
     borrado_id = estadios.id  
     estadios.delete()
@@ -358,5 +358,3 @@ class CustomLogoutView(LogoutView):
     
     
 
-
-    

@@ -1,8 +1,10 @@
 {% extends "app_mundial/plantilla_base.html" %}
-
+<h1>Hola</h1>
 {% block contenido_base %}
 
+
 <form  method="post">
+  
   {% csrf_token %}
   {{ formulario.as_p }} 
   <input type="submit" value="Enviar" />
