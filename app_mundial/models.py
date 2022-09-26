@@ -1,5 +1,10 @@
+from distutils.command.upload import upload
+from email.mime import image
+from email.policy import default
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 
@@ -43,3 +48,11 @@ class Avatar(models.Model):
     def __str__(self):
         return f"Imagen de: {self.user}"
     
+class Tag (models.Model):
+    name = models.CharField(max_length=200)
+
+    def __Str__(self):
+        return self.name
+
+
+     
