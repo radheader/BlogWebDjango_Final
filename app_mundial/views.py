@@ -23,8 +23,7 @@ from django.contrib.auth.models import User
 
 
 def inicio(request):
-
-      return render(request, "app_mundial/inicio.html")
+     return render(request, "app_mundial/inicio.html", {})
 
 def about(request):
 
@@ -355,6 +354,7 @@ def login_request(request):
 class CustomLogoutView(LogoutView):
     template_name = "app_mundial/logout.html"  
     next_page = reverse_lazy("inicio") 
+    
     
     
 
