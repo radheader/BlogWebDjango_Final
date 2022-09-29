@@ -1,5 +1,4 @@
 from django.urls import path
-
 from app_mundial import views
 
 
@@ -34,4 +33,6 @@ urlpatterns = [
     path('login/', views.login_request, name = 'login'),
     path('register/', views.register, name = 'register'),
     path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
+  
+
 ]

@@ -1,11 +1,10 @@
 from http.client import CONTINUE
-from typing import Dict
-from urllib.request import Request
 
-from django.shortcuts import render, redirect, reverse
-from django.urls import  reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import  UpdateView
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required
 
 from app_mundial.models import   Jugadores, Estadios, Selecciones
 from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, SeleccionesFormulario, UserRegisterForm, UserUpdateForm, AvatarFormulario
@@ -14,7 +13,6 @@ from app_mundial.forms import JugadoresFormulario, EstadiosFormulario, Seleccion
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -31,7 +29,7 @@ def about(request):
 
 
 # Formulario Jugadores: Eliminar, Editar, Crear, Buscar
-
+@login_required
 def jugadores(request):
     jugadores = Jugadores.objects.all()
     contexto = {"jugadores": jugadores}
@@ -123,7 +121,7 @@ def buscar_jugadores(request):
 
 # Formulario de Estadios: Eliminar, Editar, Crear, Buscar
 
-
+@login_required
 def estadios(request):
       estadios = Estadios.objects.all()
       contexto = {"estadios": estadios}
@@ -134,7 +132,7 @@ def estadios(request):
 
 
 
-def eliminar_estadios(request, id):
+def eliminar_estadios(id):
     estadios = Estadios.objects.get(id=id)
     borrado_id = estadios.id  
     estadios.delete()
@@ -202,7 +200,7 @@ def buscar_estadios(request):
 
 
 # Formulario de Selecciones: Eliminar, Editar, Crear, Buscar
-
+@login_required
 def selecciones(request):
       selecciones = Selecciones.objects.all()
       contexto = {"selecciones": selecciones}
@@ -322,15 +320,14 @@ def register(request):
     formulario = UserRegisterForm()  # Formulario vacio para construir el html
     context = {
         'form': formulario,
-        
+        'mensaje': mensaje
     }
-    if mensaje:
-        context["mensaje"] = mensaje
-    return render(request, "app_mundial/registro.html", context)
-
+    
+    return render(request, "app_mundial/registro.html", context = context )
 
 
 def login_request(request):
+    next_url = request.GET.get('next')
     if request.method == "POST":
         form = AuthenticationForm(request, data = request.POST)
         
@@ -341,7 +338,8 @@ def login_request(request):
             
             if user:
                 login(request=request, user=user)
-                return render(request, "app_mundial/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+                if next_url:
+                 return render(request, "app_mundial/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
             else:
                 return render(request,"app_mundial/inicio.html", {"mensaje":"Error, datos incorrectos"})
         else:
@@ -359,4 +357,4 @@ class CustomLogoutView(LogoutView):
     
 
 
-    
+
