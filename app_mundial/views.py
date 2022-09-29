@@ -353,8 +353,3 @@ class CustomLogoutView(LogoutView):
     template_name = "app_mundial/logout.html"  
     next_page = reverse_lazy("inicio") 
     
-    
-    
-
-
-
