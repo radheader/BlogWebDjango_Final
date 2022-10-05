@@ -19,7 +19,7 @@ class JugadoresTestCase(TestCase):
         lista_letras_equipo = [random.choice(string.ascii_letters + string.digits) for _ in range(20)]
         nombre_prueba = "".join(lista_letras_nombre)
         equipo_prueba = "".join(lista_letras_equipo)
-        edad_prueba = random.choice(range(1,121))       
+        edad_prueba = random.choice(range(1,121))     
         jugador_1 = Jugadores.objects.create(nombre=nombre_prueba, equipo=equipo_prueba, edad=edad_prueba)
 
         self.assertIsNotNone(jugador_1.id)
