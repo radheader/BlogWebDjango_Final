@@ -6,7 +6,7 @@ Este Blog con temática del mundial Qatar 2022 cuenta con Publicaciones, Registr
 
 
 Presentación del Blog:
-https://
+https://www.loom.com/share/841ced9cd8844223b789f1f3558cb830
 
 
 Bajo la metodología agil del marco de trabajo en Scrum nos organizamos para que cada uno realizara tareas específicas, al localizarnos en latitudes diferentes, utilizamos Trello donde definimos los requirimientos y construimos las tarjetas como tareas a realizar en un tiempo determinado.
