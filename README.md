@@ -1,4 +1,4 @@
-# Proyecto Python Final Webblog con Django
+# Proyecto Python Final Web blog con Django
 
 Este proyecto  fue llevado a cabo por **Cristian Camejo** ,  **Tomas Servin** y **Christian Rodriguez**. El lenguaje de programación es **Python** 3.9 bajo el framework **Django** 4.1.1
 
